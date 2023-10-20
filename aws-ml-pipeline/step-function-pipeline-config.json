@@ -1,0 +1,24 @@
+{
+    "Comment": "GreenGuardian's ML-Pipeline orchestrated by AWS Step Functions configure and monitor batch transformation jobs",
+    "StartAt": "Submit Job",
+    "States": {
+      "Submit Job": {
+        "Type": "Task",
+        "Resource": "**REMOVED FOR SECURITY -- IT SHOULD BE THE ARN OF THE CURRENT TASK'S ASSOCIATED LAMBDA FUNCTION**",
+        "ResultPath": "$.guid",
+        "Next": "Wait 60 Seconds"
+      },
+      "Wait 60 Seconds": {
+        "Type": "Wait",
+        "Seconds": 60,
+        "Next": "Get Job Status"
+      },
+      "Get Job Status": {
+        "Type": "Task",
+        "Resource": "**REMOVED FOR SECURITY -- IT SHOULD BE THE ARN OF THE CURRENT TASK'S ASSOCIATED LAMBDA FUNCTION**",
+        "InputPath": "$.guid",
+        "ResultPath": "$.status",
+        "Next": "Job Complete?"
+      }
+    }
+}
