@@ -25,7 +25,7 @@ def lambda_handler(event, context):
                 'S3DataSource': {
                     'S3DataType': 'S3Prefix',
                     # input path for the job's artifacts.
-                    'S3Uri': f's3://green-guardian-batch-transformation/input-images/{current_datetime[0:4]}/{current_datetime[5:7]}/{current_datetime[8:10]}/'
+                    'S3Uri': f's3://green-guardian-batch-transformation/input-images/{formatted_date}-{formatted_time}/'
                 }
             },
             'ContentType' : 'image/jpeg',
@@ -37,7 +37,7 @@ def lambda_handler(event, context):
         TransformOutput = {
 
             # output path for the job's artifacts.
-            'S3OutputPath': f's3://green-guardian-batch-transformation/batch-output/{current_datetime[0:4]}/{current_datetime[5:7]}/{current_datetime[8:10]}/',
+            'S3OutputPath': f's3://green-guardian-batch-transformation/batch-output/{formatted_date}-{formatted_time}/',
             'AssembleWith': 'None'
         },
         
