@@ -1,24 +1,67 @@
 {
-    "Comment": "GreenGuardian's ML-Pipeline orchestrated by AWS Step Functions configure and monitor batch transformation jobs",
-    "StartAt": "Submit Job",
-    "States": {
-      "Submit Job": {
-        "Type": "Task",
-        "Resource": "**REMOVED FOR SECURITY -- IT SHOULD BE THE ARN OF THE CURRENT TASK'S ASSOCIATED LAMBDA FUNCTION**",
-        "ResultPath": "$.guid",
-        "Next": "Wait 60 Seconds"
-      },
-      "Wait 60 Seconds": {
-        "Type": "Wait",
-        "Seconds": 60,
-        "Next": "Get Job Status"
-      },
-      "Get Job Status": {
-        "Type": "Task",
-        "Resource": "**REMOVED FOR SECURITY -- IT SHOULD BE THE ARN OF THE CURRENT TASK'S ASSOCIATED LAMBDA FUNCTION**",
-        "InputPath": "$.guid",
-        "ResultPath": "$.status",
-        "Next": "Job Complete?"
-      }
+  "Comment": "GreenGuardian's ML-Pipeline orchestrated by AWS Step Functions configure and monitor batch transformation jobs",
+  "StartAt": "Submit Job",
+  "States": {
+    "Submit Job": {
+      "Type": "Task",
+      "Resource": "**REMOVED FOR SECURITY -- IT SHOULD BE THE ARN OF THE CURRENT TASK'S ASSOCIATED LAMBDA FUNCTION**",
+      "ResultPath": "$.guid",
+      "Next": "Wait 60 Seconds"
+    },
+    "Wait 60 Seconds": {
+      "Type": "Wait",
+      "Seconds": 60,
+      "Next": "Get Job Status"
+    },
+    "Get Job Status": {
+      "Type": "Task",
+      "Resource": "**REMOVED FOR SECURITY -- IT SHOULD BE THE ARN OF THE CURRENT TASK'S ASSOCIATED LAMBDA FUNCTION**",
+      "InputPath": "$.guid",
+      "ResultPath": "$.status",
+      "Next": "Job Complete?"
+    },
+    "Job Complete?": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.status",
+          "StringEquals": "FAILED",
+          "Next": "Job Failed"
+        },
+        {
+          "Variable": "$.status",
+          "StringEquals": "SUCCEEDED",
+          "Next": "Clean Batch"
+        }
+      ],
+      "Default": "Wait 60 Seconds"
+    },
+    "Clean Batch": {
+      "Type": "Task",
+      "Resource": "**REMOVED FOR SECURITY -- IT SHOULD BE THE ARN OF THE CURRENT TASK'S ASSOCIATED LAMBDA FUNCTION**",
+      "ResultPath": "$.guid",
+      "Next": "Get Final Job Status",
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 3,
+          "BackoffRate": 2
+        }
+      ]
+    },
+    "Job Failed": {
+      "Type": "Fail",
+      "Cause": "AWS Batch Job Failed",
+      "Error": "DescribeJob returned FAILED"
+    },
+    "Get Final Job Status": {
+      "Type": "Task",
+      "Resource": "**REMOVED FOR SECURITY -- IT SHOULD BE THE ARN OF THE CURRENT TASK'S ASSOCIATED LAMBDA FUNCTION**",
+      "InputPath": "$.guid",
+      "End": true
     }
+  }
 }
