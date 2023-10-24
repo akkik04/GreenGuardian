@@ -25,12 +25,12 @@
       "Choices": [
         {
           "Variable": "$.status",
-          "StringEquals": "FAILED",
+          "StringEquals": "Failed",
           "Next": "Job Failed"
         },
         {
           "Variable": "$.status",
-          "StringEquals": "SUCCEEDED",
+          "StringEquals": "Completed",
           "Next": "Clean Batch"
         }
       ],
