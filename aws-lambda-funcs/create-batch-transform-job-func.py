@@ -13,7 +13,7 @@ def lambda_handler(event, context):
     
     # create the batch transformation job.
     response = client.create_transform_job(
-        TransformJobName = f'{formatted_date}-{formatted_time}-object-detection-unique',
+        TransformJobName = f'{formatted_date}-{formatted_time}-green-guardian-object-detection',
         ModelName = 'green-guardian-detects-plastic',
         
         # maximum size of the payload for each individual image in the batch.

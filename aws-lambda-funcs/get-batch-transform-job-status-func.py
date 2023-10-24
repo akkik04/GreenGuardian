@@ -13,7 +13,7 @@ formatted_time = current_datetime.strftime('%H-%M-%S')
 def lambda_handler(event, context):
     try:
         # find and return the status of the batch transformation job.
-        response = client.describe_transform_job(TransformJobName = f'{formatted_date}-{formatted_time}-object-detection-unique')
+        response = client.describe_transform_job(TransformJobName = f'{formatted_date}-{formatted_time}-green-guardian-object-detection')
         return response['TransformJobStatus']
     
     # catch any errors.
