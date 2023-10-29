@@ -19,7 +19,7 @@ def process_s3_data(BUCKET, FOLDER):
     
     # paginate through the s3 bucket.
     paginator = s3.get_paginator('list_objects_v2')
-    pages = paginator.paginate(BUCKET, FOLDER)
+    pages = paginator.paginate(Bucket = BUCKET, Prefix = FOLDER)
     
     # iterate through the pages and objects.
     for page in pages:
@@ -27,7 +27,7 @@ def process_s3_data(BUCKET, FOLDER):
 
             # get the .json file from s3.
             file_key = obj['Key']
-            response = s3.get_object(BUCKET, file_key)
+            response = s3.get_object(Bucket = BUCKET, Key = file_key)
 
             # parse the .json file.
             found_these_detections = json.loads(response['Body'].read())['prediction']
