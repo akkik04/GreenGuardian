@@ -9,11 +9,10 @@ def lambda_handler(event, context):
     # get the date for the job.
     current_datetime = datetime.today()
     formatted_date = current_datetime.strftime('%Y-%m-%d')
-    formatted_time = current_datetime.strftime('%H-%M-%S')
     
     # create the batch transformation job.
     response = client.create_transform_job(
-        TransformJobName = f'{formatted_date}-{formatted_time}-green-guardian-object-detection',
+        TransformJobName = f'{formatted_date}-green-guardian-object-detection',
         ModelName = 'green-guardian-detects-plastic',
         
         # maximum size of the payload for each individual image in the batch.
@@ -25,7 +24,7 @@ def lambda_handler(event, context):
                 'S3DataSource': {
                     'S3DataType': 'S3Prefix',
                     # input path for the job's artifacts.
-                    'S3Uri': f's3://green-guardian-batch-transformation/input-images/{formatted_date}-{formatted_time}/'
+                    'S3Uri': f's3://green-guardian-batch-transformation/input-images/{formatted_date}/'
                 }
             },
             'ContentType' : 'image/jpeg',
@@ -37,7 +36,7 @@ def lambda_handler(event, context):
         TransformOutput = {
 
             # output path for the job's artifacts.
-            'S3OutputPath': f's3://green-guardian-batch-transformation/batch-output/{formatted_date}-{formatted_time}/',
+            'S3OutputPath': f's3://green-guardian-batch-transformation/batch-output/{formatted_date}/',
             'AssembleWith': 'None'
         },
         

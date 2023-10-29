@@ -62,22 +62,21 @@ def lambda_handler(event, context):
     # datetime stuff.
     current_datetime = datetime.today()
     formatted_date = current_datetime.strftime('%Y-%m-%d')
-    formatted_time = current_datetime.strftime('%H-%M-%S')
     
     # specify the bucket and folder to process.
     BUCKET = 'green-guardian-batch-transformation'
-    FOLDER = f'batch-output/{formatted_date}-{formatted_time}'
+    FOLDER = f'batch-output/{formatted_date}'
 
     # create the modified results.
     results = json.dumps(process_s3_data(BUCKET, FOLDER), indent=4)
     
     # open aws lambda's tmp directory and write the results to a .json file.
-    with open(f'/tmp/{formatted_date}-{formatted_time}.json', 'w') as out:
+    with open(f'/tmp/{formatted_date}.json', 'w') as out:
         out.write(results)
     
     # upload the modified results to s3.
-    upload_filename = f"modified-outputs/{formatted_date}_{formatted_time}/{formatted_date}_{formatted_time}.json"
-    upload_to_s3(BUCKET, f'/tmp/{formatted_date}-{formatted_time}.json', upload_filename)
+    upload_filename = f"modified-outputs/{formatted_date}/{formatted_date}.json"
+    upload_to_s3(BUCKET, f'/tmp/{formatted_date}.json', upload_filename)
     
     return {
         'body': results
