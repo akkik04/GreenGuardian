@@ -12,8 +12,11 @@ def draw_bounding_box(image, data_list):
     # set the S3 bucket name and file key.
     bucket_name = 'green-guardian-batch-transformation'
 
+    current_datetime = datetime.today()
+    formatted_date = current_datetime.strftime('%Y-%m-%d')
+
     # TO-DO: Agnostic approach for the datetime of json file, as job only runs once a day.
-    file_key = f'input-images/2023-10-29/{image}'
+    file_key = f'input-images/{formatted_date}/{image}'
     
     # initialize an S3 client.
     s3 = boto3.client('s3')
@@ -61,7 +64,7 @@ def draw_bounding_box(image, data_list):
 
         # upload the modified image to a different path or folder in the S3 bucket
         # change the Key argument to the desired path or folder name
-        s3.put_object(Bucket=bucket_name, Key=f'inferenced-images/2023-10-29/{image}', Body=jpg_data)
+        s3.put_object(Bucket=bucket_name, Key=f'inferenced-images/{formatted_date}/{image}', Body=jpg_data)
         
     except Exception as e:
         print("Error:", e)
@@ -95,10 +98,11 @@ def get_bounding_box_coordinates(s3_bucket, s3_file_key):
 
 def lambda_handler(event, context):
     
-    # formatted_date = datetime.today().strftime('%Y-%m-%d')
+    current_datetime = datetime.today()
+    formatted_date = current_datetime.strftime('%Y-%m-%d')
     
     # TO-DO: Agnostic approach for the datetime of json file, as job only runs once a day.
-    json_data = get_bounding_box_coordinates('green-guardian-batch-transformation', 'modified-outputs/2023-10-29/2023-10-29.json')
+    json_data = get_bounding_box_coordinates('green-guardian-batch-transformation', f'modified-outputs/{formatted_date}/{formatted_date}.json')
 
     for image, data_lists in json_data.items():
         for data_list in data_lists:
