@@ -40,7 +40,10 @@ The Green Guardian pipeline is orchestrated by AWS Step Functions, which coordin
 Delve deeper into the mechanics of the pipeline through this concise video. Instead of a superficial overview of a button press, I present a manual invocation to elucidate the process. In practical deployment, I've set-it up so that a CRON job triggers the pipeline daily, with batch transformations taking approximately 10 minutes to complete. The video is intentionally sped up for brevity, offering a clear insight into the pipeline's functionality.
 
 
-https://github.com/akkik04/GreenGuardian/assets/81925146/cadf5c6e-95c4-45df-b8de-53daec1132b2
+
+https://github.com/akkik04/GreenGuardian/assets/81925146/d0840786-6981-4b81-9d49-a172ed97c452
+
+
 
 Driving more clarity into the pipeline, the process is as follows (for you high-level overview folks):
 
