@@ -32,14 +32,15 @@ The architecture of Green Guardian incorporates various cloud services to achiev
 
 The Green Guardian pipeline is orchestrated by AWS Step Functions, which coordinates the execution of several serverless Lambda functions to ensure that the pipeline runs smoothly and efficiently. During production, the pipeline is triggered by a CRON job, which is defined using AWS EventBridge. This CRON job ensures that the pipeline runs at regular intervals to process newly submitted images once daily. Below is a flowchart that illustrates the design-ideas behind the pipeline:
 
-<div style="text-align: center;">
-    <img src="assets/ML-Pipeline-FlowChart.png" alt="Image Description" width="400" height="400">
-</div>
+<p align="center">
+  <img src="assets/ML-Pipeline-FlowChart.png" alt="Image Description" width="400" height="400">
+</p>
 
 ### Pipeline Video
-Delve deeper into the mechanics of my data transformation pipeline through this concise video. Instead of a superficial overview of a button press, I present a manual invocation to elucidate the process. In practical deployment, I've set-it up so that a CRON job triggers the pipeline daily, with batch transformations taking approximately 10 minutes to complete. The video is intentionally sped up for brevity, offering a clear insight into the pipeline's functionality.
+Delve deeper into the mechanics of the pipeline through this concise video. Instead of a superficial overview of a button press, I present a manual invocation to elucidate the process. In practical deployment, I've set-it up so that a CRON job triggers the pipeline daily, with batch transformations taking approximately 10 minutes to complete. The video is intentionally sped up for brevity, offering a clear insight into the pipeline's functionality.
 
-<video src="assets/GreenGuardian-Final-Video-Demo.mp4" controls title="Title" width="50%" height="50%" style="margin-right: auto; margin-left: auto; display: block;"></video>
+
+https://github.com/akkik04/GreenGuardian/assets/81925146/cadf5c6e-95c4-45df-b8de-53daec1132b2
 
 Driving more clarity into the pipeline, the process is as follows (for you high-level overview folks):
 
